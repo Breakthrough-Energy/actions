@@ -1,0 +1,11 @@
+name: 'Update packages'
+description: 'Regenerate Pipfile.lock'
+inputs:
+  repo-dir:
+    description: 'Path to the repository root'
+    required: true
+runs:
+  using: 'docker'
+  image: Dockerfile
+  args:
+    - ${{ inputs.repo-dir }}
