@@ -4,6 +4,9 @@ inputs:
   repo-dir:
     description: 'Path to the repository root'
     required: true
+outputs:
+  summary:
+    description: 'Summary of changes'
 runs:
   using: 'docker'
   image: Dockerfile
