@@ -1,0 +1,18 @@
+name: 'Build docker image'
+description: 'Trigger docker build workflow'
+inputs:
+  token:
+    description: 'Access token'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Trigger docker build
+      env:
+        DISPATCH_API: https://api.github.com/repos/Breakthrough-Energy/plug/actions/workflows/12413223/dispatches
+      run: |
+        curl -XPOST -H "Authorization: token ${{ inputs.token }}" \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "Content-Type: application/json" ${{ env.DISPATCH_API }} \
+        --data '{"ref": "refs/heads/main"}'
+      shell: bash
