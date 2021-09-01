@@ -1,0 +1,28 @@
+name: 'Trigger workflow'
+description: 'Trigger workflow in another repository'
+inputs:
+  repo:
+    description: 'Repository where the workflow is hosted'
+    required: true
+  branch:
+    description: 'Branch to run the workflow on'
+    required: false
+    default: 'main'
+  workflow_id:
+    description: 'The id of the workflow to run'
+    required: true
+  token:
+    description: 'Access token'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Trigger workflow
+      env:
+        DISPATCH_API: https://api.github.com/repos/Breakthrough-Energy/${{ inputs.repo }}/actions/workflows/${{ inputs.workflow_id }}/dispatches
+      run: |
+        curl -XPOST -H "Authorization: token ${{ inputs.token }}" \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "Content-Type: application/json" ${{ env.DISPATCH_API }} \
+        --data '{"ref": "refs/heads/${{ inputs.branch }}"}'
+      shell: bash
