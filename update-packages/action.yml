@@ -3,7 +3,8 @@ description: 'Regenerate Pipfile.lock'
 inputs:
   repo-dir:
     description: 'Path to the repository root'
-    required: true
+    required: false
+    default: '.'
 outputs:
   summary:
     description: 'Summary of changes'
