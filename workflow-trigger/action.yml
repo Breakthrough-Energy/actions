@@ -14,6 +14,11 @@ inputs:
   token:
     description: 'Access token'
     required: true
+  inputs:
+    description: 'Workflow specific inputs'
+    required: false
+    default: '{}'
+
 runs:
   using: 'composite'
   steps:
@@ -24,5 +29,5 @@ runs:
         curl -XPOST -H "Authorization: token ${{ inputs.token }}" \
         -H "Accept: application/vnd.github.v3+json" \
         -H "Content-Type: application/json" ${{ env.DISPATCH_API }} \
-        --data '{"ref": "refs/heads/${{ inputs.branch }}"}'
+        --data '{"ref": "refs/heads/${{ inputs.branch }}", "inputs": ${{ inputs.inputs }} }'
       shell: bash
